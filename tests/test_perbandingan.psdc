@@ -1,0 +1,8 @@
+a <- 5
+b <- 10
+output a = b
+output a < b
+output a > b
+output a <= b
+output a >= b
+output a <= 5

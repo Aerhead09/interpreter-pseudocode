@@ -1,0 +1,4 @@
+output 2 + 3 * 4
+output (2 + 3) * 4
+output 10 - 2 - 3
+output 100 / 10 / 2

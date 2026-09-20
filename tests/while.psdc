@@ -1,0 +1,5 @@
+i <- 3
+while i > 0 do
+    output i
+    i <- i - 1
+endwhile

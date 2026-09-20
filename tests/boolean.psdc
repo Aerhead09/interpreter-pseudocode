@@ -1,0 +1,10 @@
+x <- true
+y <- false
+if x then
+    output 1
+endif
+if y then
+    output 2
+else
+    output 3
+endif
