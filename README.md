@@ -1,7 +1,7 @@
 # Pseudocode Interpreter
 
-Interpreter sederhana untuk bahasa pseudocode bergaya bahasa Indonesia/Inggris. 
-Dibuat sebagai proyek pembelajaran untuk mata kuliah Teknik Kompilasi.
+Interpreter sederhana untuk bahasa pseudocode. Dibuat sebagai proyek
+pembelajaran untuk mata kuliah Teknik Kompilasi.
 
 ## Fitur
 
@@ -16,7 +16,9 @@ Dibuat sebagai proyek pembelajaran untuk mata kuliah Teknik Kompilasi.
 - Perulangan `for i <- 1 to N do ... endfor`
 - Blok bersarang (nested if/while/for)
 
-## Batasan (belum didukung)
+## Batasan
+
+Fitur berikut **belum** didukung:
 
 - Operator `AND` / `OR`
 - Unary minus (`-5`)
@@ -30,13 +32,7 @@ Dibuat sebagai proyek pembelajaran untuk mata kuliah Teknik Kompilasi.
 
 ## Cara Build
 
-### Windows (MinGW / g++)
-
-```bat
-g++ src\Token.h src\Lexer.cpp src\Parser.cpp src\Evaluator.cpp src\main.cpp -o interpreter.exe
-```
-
-Atau jalankan:
+### Windows
 
 ```bat
 build.bat
@@ -48,25 +44,22 @@ build.bat
 make
 ```
 
-Atau manual:
-
-```sh
-g++ src/Lexer.cpp src/Parser.cpp src/Evaluator.cpp src/main.cpp -o interpreter
-```
+Binary hasil build akan ada di `bin/` (`bin/interpreter.exe` di Windows,
+`bin/interpreter` di Linux/Mac).
 
 ## Cara Pakai
 
 ```sh
-./interpreter examples/faktorial.psdc
+bin/interpreter example/faktorial.psdc
 ```
 
 Untuk Windows:
 
 ```bat
-interpreter.exe examples\faktorial.psdc
+bin\interpreter.exe example\faktorial.psdc
 ```
 
-Contoh program (`examples/faktorial.psdc`):
+Contoh program (`example/faktorial.psdc`):
 
 ```text
 input(n)
@@ -81,21 +74,29 @@ output hasil
 
 ## Test
 
-Test file ada di folder `tests/`. Setiap file `tNN_*.psdc` punya pasangan 
-`tNN_*.expected` yang berisi output yang diharapkan.
+Test file ada di folder `tests/`. Setiap file `.psdc` berisi program yang
+menguji satu atau lebih fitur interpreter.
 
-Jalankan semua test:
+Daftar test:
 
-```bat
-cd tests
-run_tests.bat
-```
+| File | Menguji |
+|---|---|
+| `assignment.psdc` | Assignment dasar |
+| `precedence.psdc` | Urutan operasi aritmatika |
+| `test_aritmatika.psdc` | Operasi `+ - * /` |
+| `test_perbandingan.psdc` | Operasi `= < > <= >=` |
+| `boolean.psdc` | Literal `true` / `false` |
+| `if.psdc`, `if_else.psdc`, `if_nested.psdc`, `if_no_else.psdc` | Percabangan |
+| `while.psdc` | Perulangan while |
+| `for.psdc`, `for_nested.psdc`, `for_calc.psdc` | Perulangan for |
+| `input.psdc`, `input_multi.psdc` | Input |
+| `divzero.psdc` | Error pembagian nol |
+| `faktorial.psdc`, `fibonacci.psdc` | Contoh program |
 
-Atau di Linux/Mac:
+Jalankan satu test:
 
 ```sh
-cd tests
-./run_tests.sh
+bin/interpreter tests/faktorial.psdc
 ```
 
 ## Struktur Kode
@@ -106,8 +107,19 @@ cd tests
 
 ## Known Issues / TODO
 
-Lihat bagian [Improvements](#improvements) di bawah.
+Beberapa hal yang perlu diperbaiki / ditambahkan:
+
+- [ ] Operator `AND` dan `OR` (token sudah ada di Lexer, tinggal ditangani di Parser dan Evaluator)
+- [ ] Unary minus (`-5`, `-(a + b)`)
+- [ ] String literal
+- [ ] Komentar (`//` atau `#`)
+- [ ] Modulo `%`
+- [ ] `printTree` belum menelusuri `body`, `condition`, `alternative`, `arguments`
+- [ ] `true` / `false` belum dikenali di `parseExpression`
+- [ ] Input tidak memvalidasi `std::cin` (kalau user input non-angka, bisa loop)
+- [ ] Memory leak pada `ASTNode` (tidak pernah di-`delete`)
+- [ ] Belum ada test otomatis dengan `expected/` output
 
 ## Lisensi
 
-MIT (atau sesuai keinginanmu).
+Proyek ini dilisensikan di bawah MIT License — lihat file [LICENSE](LICENSE).
