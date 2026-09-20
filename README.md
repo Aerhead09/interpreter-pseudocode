@@ -105,6 +105,12 @@ bin/interpreter tests/faktorial.psdc
 - `Parser` — membangun AST dari token menggunakan recursive descent
 - `Evaluator` — mengeksekusi AST dengan `unordered_map` sebagai environment
 
+## Status
+
+Proyek ini masih dalam tahap pengembangan. Saat ini sudah bisa di-build 
+dan menjalankan fitur-fitur dasar, tapi masih ada beberapa bug dan 
+keterbatasan yang belum diperbaiki. Lihat bagian Known Issues / TODO.
+
 ## Known Issues / TODO
 
 Beberapa hal yang perlu diperbaiki / ditambahkan:
