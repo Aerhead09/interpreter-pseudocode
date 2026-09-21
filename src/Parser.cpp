@@ -284,17 +284,59 @@ ASTNode* Parser::parseOutputStatement() {
     return outputNode;
 }
 
-void printTree(ASTNode* node) {
+void printTreeHelper(ASTNode* node, int depth, std::ostream& out) {
     if (node == nullptr) return;
 
-    if (node->left == nullptr && node->right == nullptr) {
-        std::cout << node->literal;
+    std::string indent(depth * 2, ' ');
+
+    bool isLeaf = (node->left == nullptr && node->right == nullptr &&
+                   node->condition == nullptr && node->body.empty() &&
+                   node->alternative.empty() && node->arguments.empty());
+
+    out << indent << node->literal;
+    if (isLeaf) {
+        out << "\n";
         return;
     }
+    out << "\n";
 
-    std::cout << "(" << node->literal << " ";
-    printTree(node->left);
-    std::cout << " ";
-    printTree(node->right);
-    std::cout << ")";
+    if (node->condition != nullptr) {
+        out << indent << "  [cond]\n";
+        printTreeHelper(node->condition, depth + 2, out);
+    }
+
+    if (node->left != nullptr) {
+        out << indent << "  [left]\n";
+        printTreeHelper(node->left, depth + 2, out);
+    }
+
+    if (node->right != nullptr) {
+        out << indent << "  [right]\n";
+        printTreeHelper(node->right, depth + 2, out);
+    }
+
+    if (!node->body.empty()) {
+        out << indent << "  [body]\n";
+        for (ASTNode* stmt : node->body) {
+            printTreeHelper(stmt, depth + 2, out);
+        }
+    }
+
+    if (!node->alternative.empty()) {
+        out << indent << "  [else]\n";
+        for (ASTNode* stmt : node->alternative) {
+            printTreeHelper(stmt, depth + 2, out);
+        }
+    }
+
+    if (!node->arguments.empty()) {
+        out << indent << "  [args]\n";
+        for (ASTNode* arg : node->arguments) {
+            printTreeHelper(arg, depth + 2, out);
+        }
+    }
+}
+
+void printTree(ASTNode* node) {
+    printTreeHelper(node, 0, std::cout);
 }

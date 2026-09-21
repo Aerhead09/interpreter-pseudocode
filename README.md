@@ -72,6 +72,48 @@ endwhile
 output hasil
 ```
 
+## Debug AST
+
+Untuk melihat AST (Abstract Syntax Tree) dari sebuah program, gunakan
+flag `--tree` atau `-t`:
+
+```sh
+bin/interpreter --tree example/faktorial.psdc
+```
+
+Output AST dicetak ke `stderr`, jadi kalau kamu redirect stdout ke file,
+AST tidak akan ikut masuk:
+
+```sh
+bin/interpreter --tree program.psdc > output.txt
+```
+
+Contoh output:
+
+```text
+--- AST ---
+PROGRAM_ROOT
+  [body]
+    input
+      [args]
+        n
+    =
+      [left]
+        hasil
+      [right]
+        1
+    while
+      [cond]
+        <=
+          [left]
+            i
+          [right]
+            n
+      [body]
+        ...
+-----------
+```
+
 ## Test
 
 Test suite ada di folder `tests/`. Setiap file `cases/*.psdc` berisi
@@ -136,7 +178,6 @@ dan optimasi masih dalam daftar TODO.
 
 ### Perbaikan internal
 
-- [ ] `printTree` belum menelusuri `body`, `condition`, `alternative`, `arguments` (saat ini hanya traverse `left` dan `right`)
 - [ ] Input tidak memvalidasi `std::cin` — kalau user input non-angka, stream jadi error state dan bisa bikin loop
 - [ ] Memory leak pada `ASTNode` — node di-`new` tapi tidak pernah di-`delete`
 - [ ] Belum ada CI (GitHub Actions) yang otomatis build + test di setiap push

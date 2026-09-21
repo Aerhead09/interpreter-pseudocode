@@ -1,17 +1,27 @@
 #include <iostream>
 #include <string>
-#include <fstream>  
-#include <sstream>  
+#include <fstream>
+#include <sstream>
 #include "Parser.h"
-#include "Evaluator.h" 
+#include "Evaluator.h"
 
 int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        std::cerr << "Cara penggunaan: interpreter nama_file.psdc\n";
-        return 1;
+    bool showTree = false;
+    std::string namaFile;
+
+    for (int i = 1; i < argc; i++) {
+        std::string arg = argv[i];
+        if (arg == "--tree" || arg == "-t") {
+            showTree = true;
+        } else if (namaFile.empty()) {
+            namaFile = arg;
+        }
     }
 
-    std::string namaFile = argv[1];
+    if (namaFile.empty()) {
+        std::cerr << "Cara penggunaan: interpreter [--tree] nama_file.psdc\n";
+        return 1;
+    }
 
     std::ifstream fileSource(namaFile);
     if (!fileSource.is_open()) {
@@ -26,6 +36,12 @@ int main(int argc, char* argv[]) {
     Lexer lexer(kodeInput);
     Parser parser(lexer);
     ASTNode* akarPohon = parser.parseProgram();
+
+    if (showTree) {
+        std::cerr << "--- AST ---\n";
+        printTree(akarPohon);
+        std::cerr << "-----------\n\n";
+    }
 
     std::unordered_map<std::string, int> environment;
     evaluate(akarPohon, environment);
