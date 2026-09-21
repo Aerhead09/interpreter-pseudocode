@@ -74,30 +74,41 @@ output hasil
 
 ## Test
 
-Test file ada di folder `tests/`. Setiap file `.psdc` berisi program yang
-menguji satu atau lebih fitur interpreter.
+Test suite ada di folder `tests/`. Setiap file `cases/*.psdc` berisi
+program yang menguji satu atau lebih fitur interpreter, dengan output
+yang diharapkan di `cases/*.expected`. Kalau test butuh input, ada file
+`cases/*.in`.
 
-Daftar test:
+Jalankan semua test (setelah build):
 
-| File | Menguji |
-|---|---|
-| `assignment.psdc` | Assignment dasar |
-| `precedence.psdc` | Urutan operasi aritmatika |
-| `test_aritmatika.psdc` | Operasi `+ - * /` |
-| `test_perbandingan.psdc` | Operasi `= < > <= >=` |
-| `boolean.psdc` | Literal `true` / `false` |
-| `if.psdc`, `if_else.psdc`, `if_nested.psdc`, `if_no_else.psdc` | Percabangan |
-| `while.psdc` | Perulangan while |
-| `for.psdc`, `for_nested.psdc`, `for_calc.psdc` | Perulangan for |
-| `input.psdc`, `input_multi.psdc` | Input |
-| `divzero.psdc` | Error pembagian nol |
-| `faktorial.psdc`, `fibonacci.psdc` | Contoh program |
+```bat
+cd tests
+run_tests.bat
+```
 
-Jalankan satu test:
+Di Linux/Mac:
 
 ```sh
-bin/interpreter tests/faktorial.psdc
+cd tests
+./run_tests.sh
 ```
+
+Hasil saat ini: **23/23 pass**.
+
+Cakupan test:
+
+| Kategori | File |
+|---|---|
+| Assignment & aritmatika | `01_assignment`, `02_aritmatika`, `03_precedence` |
+| Perbandingan | `04_perbandingan` |
+| Percabangan | `05_if_basic`, `06_if_else`, `07_if_no_else`, `08_if_nested` |
+| Perulangan while | `09_while`, `10_while_calc` |
+| Perulangan for | `11_for`, `12_for_calc`, `13_for_nested`, `14_for_body_calc` |
+| Literal boolean | `15_boolean_true`, `16_boolean_false` |
+| Input | `17_input_single`, `18_input_multi` |
+| Contoh program | `19_faktorial`, `20_fibonacci` |
+| Error handling | `21_div_by_zero`, `22_undefined_var` |
+| Gabungan | `23_kitchen_sink` |
 
 ## Struktur Kode
 
@@ -107,24 +118,35 @@ bin/interpreter tests/faktorial.psdc
 
 ## Status
 
-Proyek ini masih dalam tahap pengembangan. Saat ini sudah bisa di-build 
-dan menjalankan fitur-fitur dasar, tapi masih ada beberapa bug dan 
-keterbatasan yang belum diperbaiki. Lihat bagian Known Issues / TODO.
+Proyek ini masih dalam tahap pengembangan. Semua fitur yang diklaim di
+section **Fitur** sudah lolos test suite (23/23). Beberapa fitur tambahan
+dan optimasi masih dalam daftar TODO.
 
 ## Known Issues / TODO
 
-Beberapa hal yang perlu diperbaiki / ditambahkan:
+### Fitur yang belum ada
 
 - [ ] Operator `AND` dan `OR` (token sudah ada di Lexer, tinggal ditangani di Parser dan Evaluator)
 - [ ] Unary minus (`-5`, `-(a + b)`)
 - [ ] String literal
 - [ ] Komentar (`//` atau `#`)
 - [ ] Modulo `%`
-- [ ] `printTree` belum menelusuri `body`, `condition`, `alternative`, `arguments`
-- [ ] `true` / `false` belum dikenali di `parseExpression`
-- [ ] Input tidak memvalidasi `std::cin` (kalau user input non-angka, bisa loop)
-- [ ] Memory leak pada `ASTNode` (tidak pernah di-`delete`)
-- [ ] Belum ada test otomatis dengan `expected/` output
+- [ ] Deklarasi `int x` dan blok `Program ... endprogram`
+- [ ] `break` / `continue`
+
+### Perbaikan internal
+
+- [ ] `printTree` belum menelusuri `body`, `condition`, `alternative`, `arguments` (saat ini hanya traverse `left` dan `right`)
+- [ ] Input tidak memvalidasi `std::cin` — kalau user input non-angka, stream jadi error state dan bisa bikin loop
+- [ ] Memory leak pada `ASTNode` — node di-`new` tapi tidak pernah di-`delete`
+- [ ] Belum ada CI (GitHub Actions) yang otomatis build + test di setiap push
+
+### Optimasi performa
+
+- [ ] Ganti `unordered_map<string, int>` dengan variable slot resolution (index-based) — estimasi 5–10× lebih cepat
+- [ ] Simpan integer langsung di `ASTNode` saat parsing, jangan `stoi` tiap evaluasi
+- [ ] Ganti chain `if` di `Evaluator.cpp` dengan `switch`
+- [ ] Constant folding untuk ekspresi literal
 
 ## Lisensi
 
