@@ -1,7 +1,7 @@
 # Pseudocode Interpreter
 
 Interpreter sederhana untuk bahasa pseudocode. Dibuat sebagai proyek
-pembelajaran untuk mata kuliah Teknik Kompilasi.
+pembelajaran untuk menambah pengalaman dan menjawab rasa penasaran.
 
 ## Fitur
 
