@@ -135,7 +135,7 @@ cd tests
 ./run_tests.sh
 ```
 
-Hasil saat ini: **28/28 pass**.
+Hasil saat ini: **29/29 pass**.
 
 Cakupan test:
 
@@ -147,12 +147,20 @@ Cakupan test:
 | Perulangan while | `09_while`, `10_while_calc` |
 | Perulangan for | `11_for`, `12_for_calc`, `13_for_nested`, `14_for_body_calc` |
 | Literal boolean | `15_boolean_true`, `16_boolean_false` |
-| Input | `17_input_single`, `18_input_multi` |
+| Input | `17_input_single`, `18_input_multi`, `29_input_invalid` |
 | Contoh program | `19_faktorial`, `20_fibonacci` |
 | Error handling | `21_div_by_zero`, `22_undefined_var` |
 | Gabungan | `23_kitchen_sink` |
 | Operator logika | `24_and`, `25_or`, `26_and_or_combo` |
 | Modulo | `27_mod`, `28_mod_zero` |
+
+## CI
+
+Proyek ini punya GitHub Actions workflow (`.github/workflows/ci.yml`)
+yang otomatis build dan menjalankan test suite di Linux dan Windows
+setiap kali ada push ke `main` atau pull request.
+
+Status build bisa dilihat di tab **Actions** di GitHub.
 
 ## Struktur Kode
 
@@ -163,8 +171,24 @@ Cakupan test:
 ## Status
 
 Proyek ini masih dalam tahap pengembangan. Semua fitur yang diklaim di
-section **Fitur** sudah lolos test suite (28/28). Beberapa fitur tambahan
-dan optimasi masih dalam daftar TODO.
+section **Fitur** sudah lolos test suite (29/29) dan terverifikasi CI
+di Linux dan Windows. Beberapa fitur tambahan dan optimasi masih dalam
+daftar TODO.
+
+## Roadmap
+
+- [x] Lexer, parser, evaluator dasar
+- [x] Aritmatika, perbandingan, boolean
+- [x] Control flow: `if`, `while`, `for`
+- [x] Input/output
+- [x] Operator logika (`AND`, `OR`) dan `mod`
+- [x] Test suite otomatis (29 test)
+- [x] CI di GitHub Actions
+- [x] Debug AST (`--tree` flag)
+- [ ] Value refactor (dukungan multi-tipe: int, float, string, bool)
+- [ ] Fungsi dan prosedur
+- [ ] Scope: global vs lokal
+- [ ] Bytecode VM
 
 ## Known Issues / TODO
 
@@ -172,15 +196,16 @@ dan optimasi masih dalam daftar TODO.
 
 - [ ] Unary minus (`-5`, `-(a + b)`)
 - [ ] String literal
+- [ ] Bilangan pecahan (float)
 - [ ] Komentar (`//` atau `#`)
 - [ ] Deklarasi `int x` dan blok `Program ... endprogram`
 - [ ] `break` / `continue`
+- [ ] Fungsi dan prosedur
 
 ### Perbaikan internal
 
-- [ ] Input tidak memvalidasi `std::cin` — kalau user input non-angka, stream jadi error state dan bisa bikin loop
 - [ ] Memory leak pada `ASTNode` — node di-`new` tapi tidak pernah di-`delete`
-- [ ] Belum ada CI (GitHub Actions) yang otomatis build + test di setiap push
+- [ ] Integer overflow tidak terdeteksi — operasi yang melebihi batas `int` wrap around secara diam-diam
 
 ### Optimasi performa
 

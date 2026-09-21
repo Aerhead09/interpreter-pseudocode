@@ -118,6 +118,11 @@ TESTS = {
         "src": "a <- 5\nb <- 0\noutput a mod b\noutput 99\n",
         "expected": "Runtime Error: Modulo dengan nol terdeteksi.\n0\n99\n",
     },
+    "29_input_invalid": {
+        "src": "input(a)\noutput a\noutput 99\n",
+        "in": "abc\n",
+        "expected": "0\n99\n",
+    },
 }
 
 os.makedirs("cases", exist_ok=True)

@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Build (Linux / Mac)
+      if: runner.os != 'Windows'
+      run: |
+        g++ -std=c++17 -Wall -Wextra -I src \
+          src/Lexer.cpp src/Parser.cpp src/Evaluator.cpp src/main.cpp \
+          -o bin/interpreter
+
+    - name: Build (Windows)
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |
+        if not exist bin mkdir bin
+        g++ -std=c++17 -Wall -Wextra -I src src\Lexer.cpp src\Parser.cpp src\Evaluator.cpp src\main.cpp -o bin\interpreter.exe
+
+    - name: Run tests (Linux / Mac)
+      if: runner.os != 'Windows'
+      run: |
+        cd tests
+        chmod +x run_tests.sh
+        ./run_tests.sh
+
+    - name: Run tests (Windows)
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |
+        cd tests
+        run_tests.bat

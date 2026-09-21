@@ -71,7 +71,12 @@ int evaluate(ASTNode* node, std::unordered_map<std::string, int>& env) {
         for (ASTNode* arg : node->arguments) {
             int inputVal;
             std::cerr << "Masukkan nilai " << arg->literal << " = ";
-            std::cin >> inputVal;
+            if (!(std::cin >> inputVal)) {
+                std::cin.clear();
+                std::cin.ignore(10000, '\n');
+                std::cerr << "Input tidak valid, dianggap 0.\n";
+                inputVal = 0;
+            }
             env[arg->literal] = inputVal;
         }
         return 0;
