@@ -19,6 +19,7 @@
     MINUS,
     STAR,
     SLASH,
+    MOD,
     COMMA,
     COLON,
     LPAREN,

@@ -98,11 +98,19 @@ int evaluate(ASTNode* node, std::unordered_map<std::string, int>& env) {
                 return 0;
             }
             return leftValue / rightValue;
+        case TokenType::MOD:
+            if (rightValue == 0) {
+                std::cout << "Runtime Error: Modulo dengan nol terdeteksi.\n";
+                return 0;
+            }
+            return leftValue % rightValue;
         case TokenType::EQUALS: return leftValue == rightValue ? 1 : 0;
         case TokenType::LESS_THAN: return leftValue < rightValue ? 1 : 0;
         case TokenType::GREATER_THAN: return leftValue > rightValue ? 1 : 0;
         case TokenType::LESS_THAN_EQUALS: return leftValue <= rightValue ? 1 : 0;
         case TokenType::GREATER_THAN_EQUALS: return leftValue >= rightValue ? 1 : 0;
+        case TokenType::AND: return (leftValue != 0 && rightValue != 0) ? 1 : 0;
+        case TokenType::OR:  return (leftValue != 0 || rightValue != 0) ? 1 : 0;
         default:
             return 0;
     }

@@ -7,6 +7,8 @@
 
 enum class Precedence {
     LOWEST = 0,
+    OR,
+    AND,
     EQUALS,
     LESSGREATER,
     SUM,

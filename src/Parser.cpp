@@ -15,7 +15,12 @@ Precedence getPrecedence(TokenType type) {
             return Precedence::SUM;
         case TokenType::STAR:
         case TokenType::SLASH:
+        case TokenType::MOD:
             return Precedence::PRODUCT;
+        case TokenType::OR:
+            return Precedence::OR;
+        case TokenType::AND:
+            return Precedence::AND;
         default:
             return Precedence::LOWEST;
     }

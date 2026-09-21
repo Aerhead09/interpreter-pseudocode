@@ -7,8 +7,10 @@ pembelajaran untuk menambah pengalaman dan menjawab rasa penasaran.
 
 - Assignment: `x <- 5`
 - Aritmatika: `+ - * /` dengan precedence dan tanda kurung
+- Modulo: `a mod b` (kata kunci `mod`, bukan `%`)
 - Perbandingan: `= < > <= >=`
 - Literal boolean: `true`, `false`, `TRUE`, `FALSE`
+- Operator logika: `AND`, `OR`
 - Input: `input(x)` atau `input(x, y, z)`
 - Output: `output expr`
 - Percabangan: `if ... then ... else ... endif`
@@ -20,13 +22,11 @@ pembelajaran untuk menambah pengalaman dan menjawab rasa penasaran.
 
 Fitur berikut **belum** didukung:
 
-- Operator `AND` / `OR`
 - Unary minus (`-5`)
 - String literal (`"hello"`)
 - Komentar
 - Deklarasi `int x`
 - Blok `Program ... endprogram`
-- Modulo `%`
 - `break` / `continue`
 - Bilangan pecahan (hanya integer)
 
@@ -93,7 +93,7 @@ cd tests
 ./run_tests.sh
 ```
 
-Hasil saat ini: **23/23 pass**.
+Hasil saat ini: **28/28 pass**.
 
 Cakupan test:
 
@@ -109,6 +109,8 @@ Cakupan test:
 | Contoh program | `19_faktorial`, `20_fibonacci` |
 | Error handling | `21_div_by_zero`, `22_undefined_var` |
 | Gabungan | `23_kitchen_sink` |
+| Operator logika | `24_and`, `25_or`, `26_and_or_combo` |
+| Modulo | `27_mod`, `28_mod_zero` |
 
 ## Struktur Kode
 
@@ -119,18 +121,16 @@ Cakupan test:
 ## Status
 
 Proyek ini masih dalam tahap pengembangan. Semua fitur yang diklaim di
-section **Fitur** sudah lolos test suite (23/23). Beberapa fitur tambahan
+section **Fitur** sudah lolos test suite (28/28). Beberapa fitur tambahan
 dan optimasi masih dalam daftar TODO.
 
 ## Known Issues / TODO
 
 ### Fitur yang belum ada
 
-- [ ] Operator `AND` dan `OR` (token sudah ada di Lexer, tinggal ditangani di Parser dan Evaluator)
 - [ ] Unary minus (`-5`, `-(a + b)`)
 - [ ] String literal
 - [ ] Komentar (`//` atau `#`)
-- [ ] Modulo `%`
 - [ ] Deklarasi `int x` dan blok `Program ... endprogram`
 - [ ] `break` / `continue`
 

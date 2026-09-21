@@ -78,6 +78,7 @@ TokenType Lexer::lookupIdent(const std::string& ident) {
     if (ident == "OR") return TokenType::OR;
     if (ident == "true" || ident == "TRUE") return TokenType::TRUE_LITERAL;
     if (ident == "false" || ident == "FALSE") return TokenType::FALSE_LITERAL;
+    if (ident == "mod") return TokenType::MOD;
 
     return TokenType::IDENTIFIER;
 }
