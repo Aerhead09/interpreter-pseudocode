@@ -1,0 +1,6 @@
+x <- false
+if x then
+    output 1
+else
+    output 0
+endif

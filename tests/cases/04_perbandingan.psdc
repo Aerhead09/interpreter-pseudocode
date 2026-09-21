@@ -6,3 +6,4 @@ output a > b
 output a <= b
 output a >= b
 output a <= 5
+output a >= 5

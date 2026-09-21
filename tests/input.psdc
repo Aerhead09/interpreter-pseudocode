@@ -1,4 +1,0 @@
-input(a)
-input(b)
-output a + b
-output a * b

@@ -186,7 +186,10 @@ ASTNode* Parser::parseForStatement() {
 ASTNode* Parser::parseExpression(Precedence precedence) {
     ASTNode* leftNode = nullptr;
 
-    if (currentToken.type == TokenType::INT_LITERAL || currentToken.type == TokenType::IDENTIFIER) {
+        if (currentToken.type == TokenType::INT_LITERAL || 
+        currentToken.type == TokenType::IDENTIFIER ||
+        currentToken.type == TokenType::TRUE_LITERAL ||
+        currentToken.type == TokenType::FALSE_LITERAL)  {
         leftNode = new ASTNode(currentToken.type, currentToken.literal);
         nextToken();
     } else if (currentToken.type == TokenType::LPAREN) {

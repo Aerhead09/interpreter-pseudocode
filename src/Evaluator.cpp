@@ -30,12 +30,7 @@ int evaluate(ASTNode* node, std::unordered_map<std::string, int>& env) {
     }
 
     if (node->type == TokenType::IF) {
-        std::cout << "[DEBUG] Evaluasi IF\n";
-        std::cout << "  kondisi     = ";
         int conditionValue = evaluate(node->condition, env);
-        std::cout << conditionValue << "\n";
-        std::cout << "  body size   = " << node->body.size() << "\n";
-        std::cout << "  alternative = " << node->alternative.size() << "\n";
 
         if (conditionValue != 0) { 
             for (ASTNode* stmt : node->body) evaluate(stmt, env);
@@ -75,7 +70,7 @@ int evaluate(ASTNode* node, std::unordered_map<std::string, int>& env) {
     if (node->type == TokenType::INPUT) {
         for (ASTNode* arg : node->arguments) {
             int inputVal;
-            std::cout << "Masukkan nilai " << arg->literal << " = "; 
+            std::cerr << "Masukkan nilai " << arg->literal << " = ";
             std::cin >> inputVal;
             env[arg->literal] = inputVal;
         }

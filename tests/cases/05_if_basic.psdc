@@ -1,5 +1,6 @@
-x <- 5
+x <- 50
 if x > 10 then
     output 100
+else
+    output 200
 endif
-output 999

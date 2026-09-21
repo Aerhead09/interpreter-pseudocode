@@ -1,0 +1,10 @@
+c <- 0
+a <- 10
+b <- 5
+for i <- 1 to 3 do
+    c <- a + b
+    c <- c - b
+    c <- c * a
+    c <- c / 1
+endfor
+output c

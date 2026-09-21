@@ -1,0 +1,4 @@
+x <- true
+if x then
+    output 1
+endif
