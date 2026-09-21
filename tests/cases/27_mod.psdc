@@ -1,0 +1,4 @@
+output 10 mod 3
+output 20 mod 7
+output 100 mod 10
+output 7 mod 7

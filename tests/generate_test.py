@@ -98,6 +98,26 @@ TESTS = {
         "in": "10\n2\n",
         "expected": "30\n28\n111\n",
     },
+    "24_and": {
+        "src": "x <- 1\ny <- 1\nif x > 0 AND y > 0 then\n    output 100\nendif\n",
+        "expected": "100\n",
+    },
+    "25_or": {
+        "src": "x <- 0\ny <- 1\nif x > 0 OR y > 0 then\n    output 100\nendif\n",
+        "expected": "100\n",
+    },
+    "26_and_or_combo": {
+        "src": "a <- 1\nb <- 0\nc <- 1\nif a > 0 AND b > 0 then\n    output 111\nendif\nif a > 0 OR b > 0 then\n    output 222\nendif\nif a > 0 AND b > 0 OR c > 0 then\n    output 333\nendif\n",
+        "expected": "222\n333\n",
+    },
+    "27_mod": {
+        "src": "output 10 mod 3\noutput 20 mod 7\noutput 100 mod 10\noutput 7 mod 7\n",
+        "expected": "1\n6\n0\n0\n",
+    },
+    "28_mod_zero": {
+        "src": "a <- 5\nb <- 0\noutput a mod b\noutput 99\n",
+        "expected": "Runtime Error: Modulo dengan nol terdeteksi.\n0\n99\n",
+    },
 }
 
 os.makedirs("cases", exist_ok=True)

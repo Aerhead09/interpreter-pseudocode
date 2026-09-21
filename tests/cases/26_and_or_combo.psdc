@@ -1,0 +1,12 @@
+a <- 1
+b <- 0
+c <- 1
+if a > 0 AND b > 0 then
+    output 111
+endif
+if a > 0 OR b > 0 then
+    output 222
+endif
+if a > 0 AND b > 0 OR c > 0 then
+    output 333
+endif
