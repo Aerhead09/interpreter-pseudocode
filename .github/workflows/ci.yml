@@ -21,7 +21,8 @@ jobs:
     - name: Build (Linux / Mac)
       if: runner.os != 'Windows'
       run: |
-        g++ -std=c++17 -Wall -Wextra -I src \
+        mkdir -p bin
+        g++ -std=c++17 -Wall -Wextra -Wno-sign-compare -I src \
           src/Lexer.cpp src/Parser.cpp src/Evaluator.cpp src/main.cpp \
           -o bin/interpreter
 
@@ -30,7 +31,7 @@ jobs:
       shell: cmd
       run: |
         if not exist bin mkdir bin
-        g++ -std=c++17 -Wall -Wextra -I src src\Lexer.cpp src\Parser.cpp src\Evaluator.cpp src\main.cpp -o bin\interpreter.exe
+        g++ -std=c++17 -Wall -Wextra -Wno-sign-compare -I src src\Lexer.cpp src\Parser.cpp src\Evaluator.cpp src\main.cpp -o bin\interpreter.exe
 
     - name: Run tests (Linux / Mac)
       if: runner.os != 'Windows'
